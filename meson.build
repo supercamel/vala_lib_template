@@ -25,21 +25,12 @@ pkg = import('pkgconfig')
 
 add_global_arguments(['-fPIC'], language: 'c')
 
-pkg_mod = import('pkgconfig')
-pkg_mod.generate(libraries : namespace,
-  version: version,
-  name: namespace,
-  filebase: namespace,
-  description: description
-  )
-
-
-header = namespace + '.h'
-vapi = namespace + '-' + version + '.vapi'
+header = namespace.to_lower() + '.h'
+vapi = namespace.to_lower() + '-' + version + '.vapi'
 girfile = namespace + '-' + version + '.gir'
 typelib = namespace + '-' + version + '.typelib'
 
-lib = shared_library(namespace, sources,
+lib = shared_library(namespace.to_lower(), sources,
   vala_header: header,
   vala_vapi: vapi,
   vala_gir: girfile,
@@ -47,14 +38,20 @@ lib = shared_library(namespace, sources,
   install: true,
   install_dir: [true, true, true, true])
 
-pkg.generate(lib)
+pkg.generate(lib,
+  version: version,
+  name: namespace.to_lower(),
+  filebase: namespace.to_lower() + '-' + version,
+  description: description,
+  subdirs: namespace.to_lower() + '-' + version
+  )
 
 
 
 g_ir_compiler = find_program('g-ir-compiler')
 system = build_machine.system()
 
-so = 'lib' + namespace + '.'
+so = 'lib' + namespace.to_lowe() + '.'
 if system == 'windows'
   so += 'dll'
 else
