@@ -12,7 +12,7 @@ On Linux (Ubuntu 20.04 tested)
 ```
 
 
-On Windows / MSYS2 (not yet tested but probably will work . . . . )
+On Windows / MSYS2
 
 ```
   meson builddir
