@@ -51,7 +51,7 @@ pkg.generate(lib,
 g_ir_compiler = find_program('g-ir-compiler')
 system = build_machine.system()
 
-so = 'lib' + namespace.to_lowe() + '.'
+so = 'lib' + namespace.to_lower() + '.'
 if system == 'windows'
   so += 'dll'
 else
